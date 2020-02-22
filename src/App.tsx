@@ -1,7 +1,8 @@
-/* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import { Link } from "@reach/router"
+import ScoreLanding from "./pages/Scores/ScoreLanding"
 
 const App = () => (
   <div className="App">
@@ -9,12 +10,13 @@ const App = () => (
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 
 
-    <header className="App-header">
+    {/* <header className="App-header">
       <img src={logo} className="App-logo" alt="logo" />
       <p>
-        Roisin smells.
+        React.
       </p>
-    </header>
+    </header> */}
+    <ScoreLanding />
   </div>
 );
 
