@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import ScoreLanding from "./pages/Scores/ScoreLanding";
 
 const App = (): JSX.Element => (
