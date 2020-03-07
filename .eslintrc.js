@@ -6,13 +6,14 @@ module.exports = {
   extends: [
     "airbnb",
     "plugin:react/recommended",
-    "eslint:recommended",
-    "stylelint-prettier/recommended",
     "prettier",
     "plugin:prettier/recommended",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "tslint-plugin-prettier",
-    "tslint-config-prettier"
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript"
   ],
   globals: {
     Atomics: "readonly",
@@ -28,10 +29,18 @@ module.exports = {
   },
   plugins: ["prettier", "react", "@typescript-eslint"],
   rules: {
-    rules: {
-      "react/jsx-filename-extension": [1, { extensions: [".tsx", ".jsx"] }],
-      prettier: true,
-      "@typescript-eslint/explicit-function-return-type": true
-    }
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        js: "never",
+        jsx: "never",
+        ts: "never",
+        tsx: "never"
+      }
+    ],
+    "import/prefer-default-export": "off",
+    "vars-on-top": "error",
+    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }]
   }
 };
