@@ -1,6 +1,4 @@
 import React from "react";
 
-const BlogLanding = () => (
-    <div>Stubb</div>
-    );
+const BlogLanding = (): React.ReactNode => <div>Stubb</div>;
 export default BlogLanding;

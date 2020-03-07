@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import ScoreLanding from "./pages/Scores/ScoreLanding";
 
-const App = () => (
+const App = (): ReactElement => (
   <div className="App">
     <link
       rel="stylesheet"

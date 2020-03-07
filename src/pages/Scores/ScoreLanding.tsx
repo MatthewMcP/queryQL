@@ -34,7 +34,7 @@ const rows: Array<Row> = [
   createSingleRow("Gingerbread", 356, 16.0, 49, 3.9)
 ];
 
-const ScoreLanding = () => {
+const ScoreLanding = (): React.ReactNode => {
   const classes = useStyles();
 
   return (
