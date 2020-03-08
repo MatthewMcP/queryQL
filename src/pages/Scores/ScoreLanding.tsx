@@ -37,6 +37,8 @@ const rows: Array<Row> = [
 const ScoreLanding = (): JSX.Element => {
   const classes = useStyles();
 
+  console.log("rest");
+
   return (
     <div>
       <div>ScoreLanding</div>

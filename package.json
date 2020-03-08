@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "clean": "rm -rf ./node_modules",
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.ts' && npx stylelint --fix 'src/*.scss'",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
   },
   "prettier": {
     "editor.formatOnSave": true
