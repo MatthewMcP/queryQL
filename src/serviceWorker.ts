@@ -1,3 +1,5 @@
+/* eslint-disable curly */
+/* eslint-disable no-magic-numbers */
 /* eslint-disable no-param-reassign */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-console */

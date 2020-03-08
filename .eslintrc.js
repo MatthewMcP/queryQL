@@ -39,8 +39,34 @@ module.exports = {
         tsx: "never"
       }
     ],
+    "lines-between-class-members": [
+      "error",
+      "always",
+      { exceptAfterSingleLine: true }
+    ],
+    "block-scoped-var": "error",
+    "default-case": "error",
+    "default-param-last": ["error"],
     "import/prefer-default-export": "off",
+    "jsx-quotes": ["error", "prefer-double"],
+    "max-len": ["error", { code: 100 }],
+    "max-statements": ["error", 15, { ignoreTopLevelFunctions: true }],
+    "no-else-return": "error",
+    "no-extra-parens": "error",
+    "no-magic-numbers": ["error", { ignoreArrayIndexes: true }],
+    "no-nested-ternary": "error",
+    "no-template-curly-in-string": "error",
+    "no-useless-rename": "error",
+    "no-var": "error",
+    "prefer-const": "error",
+    "prefer-destructuring": ["error", { object: true, array: true }],
+    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }],
+    "sort-keys": ["error", "asc", { minKeys: 3, natural: true }],
     "vars-on-top": "error",
-    "react/jsx-filename-extension": ["error", { extensions: [".tsx"] }]
+    camelcase: "error",
+    complexity: ["error", 8],
+    curly: ["error", "multi-or-nest"],
+    eqeqeq: "error",
+    quotes: ["error", "double"]
   }
 };
