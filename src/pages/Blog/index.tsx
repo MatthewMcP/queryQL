@@ -1,3 +1,3 @@
-import BlogLanding from "./BlogLanding";
+import BlogLanding from './BlogLanding';
 
 export { BlogLanding };

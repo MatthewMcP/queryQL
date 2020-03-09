@@ -1,6 +1,6 @@
-import React from "react";
-import ScoreLanding from "./pages/Scores/ScoreLanding";
-import "./App.scss";
+import React from 'react';
+import ScoreLanding from './pages/Scores/ScoreLanding';
+import './App.scss';
 
 const App = (): JSX.Element => (
   <div className="App">

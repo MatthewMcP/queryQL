@@ -2,20 +2,20 @@
   "extends": ["stylelint-prettier/recommended"],
   "plugins": ["stylelint-scss", "stylelint-order"],
   "rules": {
-    "order/order": ["custom-properties", "declarations"],
-    "order/properties-alphabetical-order": true,
-    "scss/dollar-variable-pattern": "^foo",
-    "scss/selector-no-redundant-nesting-selector": true,
-    "length-zero-no-unit": true,
-    "number-leading-zero": "always",
-    "number-no-trailing-zeros": true,
-    "unit-whitelist": ["%", "deg", "px", "rem", "s"],
+    "block-closing-brace-newline-after": "always",
     "color-hex-case": "upper",
     "color-hex-length": "long",
     "font-weight-notation": "numeric",
-    "property-case": "lower",
-    "block-closing-brace-newline-after": "always",
+    "length-zero-no-unit": true,
     "max-empty-lines": 2,
-    "no-empty-first-line": true
+    "no-empty-first-line": true,
+    "number-leading-zero": "always",
+    "number-no-trailing-zeros": true,
+    "order/order": ["custom-properties", "declarations"],
+    "order/properties-alphabetical-order": true,
+    "property-case": "lower",
+    "scss/dollar-variable-pattern": "^foo",
+    "scss/selector-no-redundant-nesting-selector": true,
+    "unit-whitelist": ["%", "deg", "px", "rem", "s"]
   }
 }
