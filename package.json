@@ -28,6 +28,16 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.scss": "stylelint --fix",
+    "*.ts": "eslint --cache --fix",
+    "*.tsx": "eslint --cache --fix"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
@@ -40,6 +50,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^1.7.0",
+    "husky": ">=4",
+    "lint-staged": ">=10",
     "prettier": "^1.19.1",
     "stylelint": "^13.2.0",
     "stylelint-config-prettier": "^8.0.1",
