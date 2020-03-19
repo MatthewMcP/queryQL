@@ -8,6 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { gql } from 'apollo-boost';
+import { useQuery } from '@apollo/react-hooks';
 import { Row } from './types/Row';
 
 const useStyles = makeStyles({
@@ -34,9 +36,28 @@ const rows: Array<Row> = [
   createSingleRow('Cupcake', 305, 3.7, 67, 4.3),
   createSingleRow('Gingerbread', 356, 16.0, 49, 3.9),
 ];
-
+const EXCHANGE_RATES = gql`
+  {
+    country(code: "BR") {
+      name
+      native
+      emoji
+      currency
+      languages {
+        code
+        name
+      }
+    }
+  }
+`;
 const ScoreLanding = (): JSX.Element => {
   const classes = useStyles();
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+
+  console.log('data: ');
+  console.log(data);
 
   return (
     <div>
