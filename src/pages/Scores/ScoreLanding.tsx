@@ -54,7 +54,7 @@ const ScoreLanding = (): JSX.Element => {
   const classes = useStyles();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+  const { data } = useQuery(EXCHANGE_RATES);
 
   console.log('data: ');
   console.log(data);

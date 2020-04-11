@@ -44,6 +44,7 @@
       "always",
       { "exceptAfterSingleLine": true }
     ],
+    "react/prop-types": 0,
     "block-scoped-var": "error",
     "camelcase": "error",
     "complexity": ["error", 8],

@@ -1,20 +1,16 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-magic-numbers */
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import React, { useState } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
-import { Row } from './types/Row';
+import { logError } from '../../util';
+import { Country } from './Types';
+import { CountriesCard } from './CountriesCard';
 
 const EXCHANGE_RATES = gql`
   {
-    country(code: "BR") {
+    countries {
       name
       native
       emoji
@@ -26,18 +22,25 @@ const EXCHANGE_RATES = gql`
     }
   }
 `;
-const ScoreLanding = (): JSX.Element => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { loading, error, data } = useQuery(EXCHANGE_RATES);
+const Pokemon = (): JSX.Element => {
+  const [countries, setCountries] = useState<Country[][]>([]);
+  useQuery(EXCHANGE_RATES, {
+    onCompleted: data => {
+      if (data && data.countries) {
+        console.log('data' + data.countries);
+        setCountries([data.countries]);
+      }
+    },
+    onError: error => {
+      logError(error);
+    },
+  });
 
-  console.log('data: ');
-  console.log(data);
-
-  // return queryState handler or
   return (
     <div>
-      <div>ScoreLanding</div>
+      <div>Pokemon</div>
+      <CountriesCard countries={countries} />
     </div>
   );
 };
-export default ScoreLanding;
+export default Pokemon;
