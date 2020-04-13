@@ -67,6 +67,7 @@
     "prefer-destructuring": ["error", { "object": true, "array": true }],
     "quotes": ["error", "single"],
     "react/jsx-filename-extension": ["error", { "extensions": [".tsx"] }],
+    "react/jsx-one-expression-per-line": ["error", { "allow": "single-child" }],
     "vars-on-top": "error"
   }
 }

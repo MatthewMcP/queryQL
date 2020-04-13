@@ -6,7 +6,7 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { logError } from '../../util';
 import { Country } from './Types';
-import { CountriesCard } from './CountriesCard';
+import { Card } from '../../shared/component/index';
 
 const EXCHANGE_RATES = gql`
   {
@@ -26,10 +26,7 @@ const Pokemon = (): JSX.Element => {
   const [countries, setCountries] = useState<Country[][]>([]);
   useQuery(EXCHANGE_RATES, {
     onCompleted: data => {
-      if (data && data.countries) {
-        console.log('data' + data.countries);
-        setCountries([data.countries]);
-      }
+      if (data && data.countries) setCountries(data.countries);
     },
     onError: error => {
       logError(error);
@@ -39,7 +36,7 @@ const Pokemon = (): JSX.Element => {
   return (
     <div>
       <div>Pokemon</div>
-      <CountriesCard countries={countries} />
+      <Card data={countries} />
     </div>
   );
 };
