@@ -16,7 +16,6 @@ const EXCHANGE_RATES = gql`
       emoji
       currency
       languages {
-        code
         name
       }
     }

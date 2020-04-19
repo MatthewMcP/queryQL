@@ -3,45 +3,93 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { FunctionComponent } from 'react';
-import Paper from '@material-ui/core/Paper';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import { trimAndCapitalise } from '../../util/index';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    paper: {
-      // eslint-disable-next-line no-magic-numbers
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-  })
-);
+const Generator2 = (variableName22: any): string => {
+  console.log('Generator2');
+  console.log(variableName22);
 
+  if (variableName22 === 'object') return '';
+  return variableName22;
+};
 type DisplayLoopProps = {
   objectOrArray: any;
+  objectName?: string;
 };
 
 const DisplayLoop: FunctionComponent<DisplayLoopProps> = ({
   objectOrArray,
+  objectName = '',
 }) => {
   const jsx = [];
-  for (const varibleName in objectOrArray) {
-    if (!varibleName.startsWith('_')) {
+  const ifNotFalse = (): string => {
+    console.log('Object');
+
+    if (objectName === 'temporary') return '';
+    return objectOrArray['__typename'];
+  };
+  for (const variableName in objectOrArray) {
+    if (!variableName.startsWith('_')) {
       // eslint-disable-next-line no-prototype-builtins
-      if (objectOrArray.hasOwnProperty(varibleName)) {
+      if (objectOrArray.hasOwnProperty(variableName)) {
         jsx.push(
-          <DisplayValue
-            variableName={varibleName}
-            variable={objectOrArray[varibleName]}
-          />
+          <>
+            <DisplayValue
+              variableName={variableName}
+              variable={objectOrArray[variableName]}
+            />
+          </>
+        );
+      }
+    }
+  }
+  console.log('Object');
+  console.log(objectOrArray);
+  console.log(objectOrArray['__typename']);
+  // TODO change from div
+  return (
+    <Grid container xs>
+      {trimAndCapitalise(ifNotFalse())}
+      {': '}
+      {jsx.map((value: any) => value)}
+    </Grid>
+  );
+};
+
+const DisplayArray: FunctionComponent<DisplayLoopProps> = ({
+  objectOrArray,
+  objectName,
+}) => {
+  const jsx = [];
+  console.log('Array ' + objectOrArray['__typename']);
+  console.log(objectOrArray);
+  console.log(objectName);
+  for (const variableName in objectOrArray) {
+    if (!variableName.startsWith('_')) {
+      console.log('variableName: array ' + variableName);
+
+      // eslint-disable-next-line no-prototype-builtins
+      if (objectOrArray.hasOwnProperty(variableName)) {
+        jsx.push(
+          <>
+            <DisplayValue
+              variableName={'temporary'}
+              variable={objectOrArray[variableName]}
+            />
+          </>
         );
       }
     }
   }
   // TODO change from div
-  return <div> {jsx.map((value: any) => value)} </div>;
+  return (
+    <Grid container xs>
+      {trimAndCapitalise(Generator2(objectName))}
+      {'sdfdsf : '}
+      {jsx.map((value: any) => value)}
+    </Grid>
+  );
 };
 
 type DisplayValueProps = {
@@ -53,38 +101,38 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
   variableName = '',
   variable,
 }) => {
-  const classes = useStyles();
-  console.log('variable');
-  console.log(variable);
   // TODO Bold name. Format Variable + Name.
   // TODO Column Sizes in grid format
   if (typeof variable === 'string' || variable instanceof String) {
     // TODO: Fix toString()
     return (
       <Grid item xs>
-        <Paper className={classes.paper}>
-          {trimAndCapitalise(variableName)}:
-          {trimAndCapitalise(variable.toString())}
-        </Paper>
+        {trimAndCapitalise(variableName)}:{' '}
+        {trimAndCapitalise(variable.toString())}
       </Grid>
     );
   }
   if (typeof variable === 'number' || variable instanceof Number) {
     return (
       <Grid item xs>
-        <Paper className={classes.paper}>
-          {trimAndCapitalise(variableName)}: {variable}
-        </Paper>
+        {trimAndCapitalise(variableName)}: {variable}
       </Grid>
     );
   }
+  console.log('variable');
+  console.log(variable);
+  console.log(variableName);
 
-  if (
-    Array.isArray(variable) ||
-    (!!variable && variable.constructor === Object)
-  )
-    // TODO show variable Name
-    return <DisplayLoop objectOrArray={variable} />;
+  if (Array.isArray(variable))
+    return (
+      <DisplayArray
+        objectName={Generator2(variableName)}
+        objectOrArray={variable}
+      />
+    );
+
+  if (!!variable && variable.constructor === Object)
+    return <DisplayLoop objectName={variableName} objectOrArray={variable} />;
 
   return <div>Nodata </div>;
 };
