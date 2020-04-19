@@ -58,7 +58,10 @@
     "max-statements": ["error", 15, { "ignoreTopLevelFunctions": true }],
     "no-else-return": "error",
     "no-extra-parens": "error",
-    "no-magic-numbers": ["error", { "ignoreArrayIndexes": true }],
+    "no-magic-numbers": [
+      "error",
+      { "ignore": [0, 1], "ignoreArrayIndexes": true }
+    ],
     "no-nested-ternary": "error",
     "no-template-curly-in-string": "error",
     "no-useless-rename": "error",
