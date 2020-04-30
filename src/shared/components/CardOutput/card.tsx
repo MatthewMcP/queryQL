@@ -39,7 +39,7 @@ const Card: FunctionComponent<CardProps> = ({ data }) => {
           <Grid container xs={12}>
             {data.map((country: any) => (
               <Paper className={classes.paper2}>
-                <Grid container spacing={5} xs={12}>
+                <Grid container spacing={2} xs={12}>
                   <DisplayValue variable={country} />
                 </Grid>
               </Paper>

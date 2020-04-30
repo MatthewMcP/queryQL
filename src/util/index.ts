@@ -1,4 +1,4 @@
-import { logError } from './logging/logger';
+import { log, logError, logWarning } from './logging/logger';
 import { trimAndCapitalise } from './formatting/stringFormatter';
 
-export { logError, trimAndCapitalise };
+export { log, logError, logWarning, trimAndCapitalise };

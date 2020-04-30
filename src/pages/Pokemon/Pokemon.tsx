@@ -6,9 +6,9 @@ import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { logError } from '../../util';
 import { Country } from './Types';
-import { Card } from '../../shared/component/index';
+import { Card } from '../../shared/components/index';
 
-const EXCHANGE_RATES = gql`
+const AllCountriesGQL = gql`
   {
     countries {
       name
@@ -23,7 +23,7 @@ const EXCHANGE_RATES = gql`
 `;
 const Pokemon = (): JSX.Element => {
   const [countries, setCountries] = useState<Country[][]>([]);
-  useQuery(EXCHANGE_RATES, {
+  useQuery(AllCountriesGQL, {
     onCompleted: data => {
       if (data && data.countries) setCountries(data.countries);
     },
