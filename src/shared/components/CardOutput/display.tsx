@@ -33,7 +33,7 @@ const DisplayArray: FunctionComponent<DisplayLoopProps> = ({
         jsx.push(
           <>
             <DisplayValue
-              variableName={'EmptyDisplay'}
+              variableName="EmptyDisplay"
               variable={objectOrArray[variableName]}
             />
           </>
@@ -56,6 +56,7 @@ const DisplayObject: FunctionComponent<DisplayLoopProps> = ({
 }) => {
   const TypeNameOrEmpty = (): string => {
     if (objectName === 'EmptyDisplay') return '';
+    // eslint-disable-next-line dot-notation
     return objectOrArray['__typename'];
   };
 
