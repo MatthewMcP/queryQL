@@ -1,3 +1,7 @@
+This project is playing with the idea of a user making a single database call and generating a site from this. It is primarily a learning experience. The basic premise of this is that each graphQL call returned an key-value object (with key being field name), applying the 80-20 rule most of the display will be simple output of values and the use of the grid system allows these to be generated in a way that allows the display to look nice.
+
+There are a few other expansions I'd like to expand onto this (for example a table system) and something cool within the URL but that will be later down the line.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

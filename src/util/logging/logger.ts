@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// Temporary solution but nice to have it one file -> change it in one file
+// Temporary solution but nice to have it one file so I can change in one location
 
 const log = (logMessage: string): void => {
   console.error(`Log: ${logMessage}`);
@@ -11,7 +11,7 @@ const logError = (error: Error): void => {
 };
 
 const logWarning = (warning: string): void => {
-  console.log(`Warning: ${warning}`);
+  console.warn(`Warning: ${warning}`);
 };
 
 export { log, logError, logWarning };

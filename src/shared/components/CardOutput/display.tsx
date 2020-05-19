@@ -6,6 +6,11 @@ import React, { FunctionComponent } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { trimAndCapitalise } from '../../../util/index';
 
+// TODO: Rename and tidy
+// TODO: Remove handling of arrays + Objects. Get design right then add in
+// TODO: Sort first Object being shown
+// TODO: Sort variableNameIfNotObject = 'Object' nonsense
+
 const variableNameIfNotObject = (variable: any): string => {
   if (variable === 'object') return '';
   return variable;
@@ -18,7 +23,7 @@ type DisplayLoopProps = {
 
 type DisplayValueProps = {
   variableName?: string;
-  variable: any;
+  variableValue: any;
 };
 
 const DisplayArray: FunctionComponent<DisplayLoopProps> = ({
@@ -34,7 +39,7 @@ const DisplayArray: FunctionComponent<DisplayLoopProps> = ({
           <>
             <DisplayValue
               variableName="EmptyDisplay"
-              variable={objectOrArray[variableName]}
+              variableValue={objectOrArray[variableName]}
             />
           </>
         );
@@ -69,7 +74,7 @@ const DisplayObject: FunctionComponent<DisplayLoopProps> = ({
           <>
             <DisplayValue
               variableName={variableName}
-              variable={objectOrArray[variableName]}
+              variableValue={objectOrArray[variableName]}
             />
           </>
         );
@@ -87,38 +92,41 @@ const DisplayObject: FunctionComponent<DisplayLoopProps> = ({
 
 const DisplayValue: FunctionComponent<DisplayValueProps> = ({
   variableName = '',
-  variable,
+  variableValue,
 }) => {
-  if (typeof variable === 'string' || variable instanceof String) {
+  if (typeof variableValue === 'string' || variableValue instanceof String) {
     return (
       <Grid item xs>
         {trimAndCapitalise(variableName)}
         {': '}
-        {trimAndCapitalise(variable.toString())}
+        {trimAndCapitalise(variableValue.toString())}
       </Grid>
     );
   }
-  if (typeof variable === 'number' || variable instanceof Number) {
+  if (typeof variableValue === 'number' || variableValue instanceof Number) {
     return (
       <Grid item xs>
         {trimAndCapitalise(variableName)}
         {': '}
-        {variable}
+        {variableValue}
       </Grid>
     );
   }
 
-  if (Array.isArray(variable)) {
+  if (Array.isArray(variableValue)) {
     return (
       <DisplayArray
         objectName={variableNameIfNotObject(variableName)}
-        objectOrArray={variable}
+        objectOrArray={variableValue}
       />
     );
   }
 
-  if (!!variable && variable.constructor === Object)
-    return <DisplayObject objectName={variableName} objectOrArray={variable} />;
+  if (!!variableValue && variableValue.constructor === Object) {
+    return (
+      <DisplayObject objectName={variableName} objectOrArray={variableValue} />
+    );
+  }
 
   return (
     <Grid item xs>

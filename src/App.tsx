@@ -1,5 +1,4 @@
 import React from 'react';
-// import ScoreLanding from './pages/Scores/ScoreLanding';
 import { Pokemon } from './pages/Pokemon';
 import './App.scss';
 
@@ -21,7 +20,6 @@ const App = (): JSX.Element => (
       </p>
     </header> */}
     <Pokemon />
-    {/* <ScoreLanding /> */}
   </div>
 );
 

@@ -1,7 +1,6 @@
 import { logWarning } from '../logging/logger';
 
 const trimAndCapitalise = (unformattedString: string): string => {
-  // TODO Error handling
   if (!unformattedString) {
     logWarning('Empty string passed to stringFormater:trimAndCapitalise');
     return '';
