@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
 import { ApolloProvider } from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import './styles/tailwind.css';
 
 const client = new ApolloClient({
   uri: 'https://countries.trevorblades.com/',

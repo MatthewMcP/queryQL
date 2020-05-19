@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// Temporary solution but nice to have it one file so I can change in one location
+// Temporary solution but it's nicer to have it one file so I can change in one location
 
 const log = (logMessage: string): void => {
   console.error(`Log: ${logMessage}`);

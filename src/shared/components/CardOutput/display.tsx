@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable react/jsx-one-expression-per-line */
 import React, { FunctionComponent } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { trimAndCapitalise } from '../../../util/index';
 
 // TODO: Rename and tidy
@@ -48,10 +47,10 @@ const DisplayArray: FunctionComponent<DisplayLoopProps> = ({
   }
   // TODO change from div
   return (
-    <Grid container xs>
+    <span className="col-auto">
       {trimAndCapitalise(variableNameIfNotObject(objectName))}
       {jsx.map((value: any) => value)}
-    </Grid>
+    </span>
   );
 };
 
@@ -82,11 +81,11 @@ const DisplayObject: FunctionComponent<DisplayLoopProps> = ({
     }
   }
   return (
-    <Grid container xs>
+    <div className="col-auto grid grid-cols-2">
       {trimAndCapitalise(TypeNameOrEmpty())}
       {': '}
       {jsx.map((value: any) => value)}
-    </Grid>
+    </div>
   );
 };
 
@@ -96,20 +95,20 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
 }) => {
   if (typeof variableValue === 'string' || variableValue instanceof String) {
     return (
-      <Grid item xs>
+      <span className="col-auto">
         {trimAndCapitalise(variableName)}
         {': '}
         {trimAndCapitalise(variableValue.toString())}
-      </Grid>
+      </span>
     );
   }
   if (typeof variableValue === 'number' || variableValue instanceof Number) {
     return (
-      <Grid item xs>
+      <span className="col-auto">
         {trimAndCapitalise(variableName)}
         {': '}
         {variableValue}
-      </Grid>
+      </span>
     );
   }
 
@@ -128,11 +127,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
     );
   }
 
-  return (
-    <Grid item xs>
-      Empty/Unkown
-    </Grid>
-  );
+  return <span className="col-auto">Empty/Unkown</span>;
 };
 
 export { DisplayValue };

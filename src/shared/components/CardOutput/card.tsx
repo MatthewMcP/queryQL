@@ -1,55 +1,27 @@
 /* eslint-disable react/jsx-key */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FunctionComponent } from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import { Paper } from '@material-ui/core';
 import { DisplayValue } from './display';
 
 type CardProps = {
   data: any;
 };
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-    },
-    paper: {
-      // eslint-disable-next-line no-magic-numbers
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
-    paper2: {
-      // eslint-disable-next-line no-magic-numbers
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      borderStyle: 'solid',
-    },
-  })
-);
-
 const Card: FunctionComponent<CardProps> = ({ data }) => {
-  const classes = useStyles();
   return (
-    <>
+    <div className="container mx-auto">
       {data ? (
-        <div className={classes.root}>
-          <Grid container xs={12}>
-            {data.map((country: any) => (
-              <Paper className={classes.paper2}>
-                <Grid container spacing={2} xs={12}>
-                  <DisplayValue variableValue={country} />
-                </Grid>
-              </Paper>
-            ))}
-          </Grid>
-        </div>
+        <>
+          {data.map((country: any) => (
+            <div className="container mx-auto text-white border-2 border-white m-4 rounded grid grid-cols-6 gap-4">
+              <DisplayValue variableValue={country} />
+            </div>
+          ))}
+        </>
       ) : (
         <span>Nodata present</span>
       )}
-    </>
+    </div>
   );
 };
 export { Card };
