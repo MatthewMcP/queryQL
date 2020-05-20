@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-key */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { FunctionComponent } from 'react';
 import { DisplayValue } from './display';
 
@@ -13,8 +11,13 @@ const Card: FunctionComponent<CardProps> = ({ data }) => {
       {data ? (
         <>
           {data.map((country: any) => (
-            <div className="container mx-auto text-white border-2 border-white m-4 rounded grid grid-cols-6 gap-4">
-              <DisplayValue variableValue={country} />
+            <div
+              key={country.toString()}
+              // eslint-disable-next-line max-len
+              className="container mx-auto text-white border-2 border-white m-4 rounded grid grid-cols-1 grid-flow-col-dense sm:grid-flow-col gap-2 row-auto"
+              // eslint-disable-next-line prettier/prettier
+            >
+              <DisplayValue propertyValue={country} />
             </div>
           ))}
         </>

@@ -11,6 +11,8 @@ const Pokemon = (): JSX.Element => {
     countries {
       name
       native
+      capital
+      phone
       emoji
       currency
       languages {
