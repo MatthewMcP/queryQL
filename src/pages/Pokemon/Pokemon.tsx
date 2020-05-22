@@ -1,8 +1,9 @@
-import React, { useState, ChangeEvent } from 'react';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import React, { useEffect, useState, ChangeEvent } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { useDebounce } from 'use-debounce';
-import { logError } from '../../util';
+import { logError, useQueryString } from '../../util';
 import { Country } from './Types';
 import { Card } from '../../shared/components/index';
 
@@ -21,18 +22,24 @@ const Pokemon = (): JSX.Element => {
     }
   }`;
 
-  const [queryText, setQueryText] = useState<string>(defaultQueryString);
-  const debounceTimer = 1000;
-  const [debouncedQueryText] = useDebounce(queryText, debounceTimer);
+  // TODO: Remove the default closer to 'release'
+  const { value, onSetValue } = useQueryString('state', defaultQueryString);
+  const [query, setQueryText] = useState(value);
+  const debounceTime = 1000;
+  const [debouncedQueryText] = useDebounce(query, debounceTime);
 
-  const [countries, setCountries] = useState<Country[][]>([]);
+  useEffect(() => {
+    onSetValue(debouncedQueryText);
+  }, [debouncedQueryText]);
 
   const handleQueryChange = (e: ChangeEvent): void => {
     const target = e.target as HTMLTextAreaElement;
     setQueryText(target.value);
   };
 
+  const [countries, setCountries] = useState<Country[][]>([]);
   useQuery(gql(debouncedQueryText), {
+    skip: !debouncedQueryText,
     onCompleted: data => {
       if (data && data.countries) setCountries(data.countries);
     },
@@ -47,7 +54,7 @@ const Pokemon = (): JSX.Element => {
       <h1 className="flex justify-center text-white mb-8">Pokemon</h1>
       <textarea
         className="box-border h-64 w-64 p-2 border-4 border-gray-400 bg-gray-200 mb-6"
-        value={queryText}
+        value={query}
         onChange={handleQueryChange}
       />
       <Card data={countries} />
