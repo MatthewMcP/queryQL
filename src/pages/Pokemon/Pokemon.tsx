@@ -1,11 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { useDebounce } from 'use-debounce';
+import { ToastContainer, toast } from 'react-toastify';
 import { logError, useQueryString } from '../../util';
 import { Country } from './Types';
 import { Card } from '../../shared/components/index';
+import 'react-toastify/dist/ReactToastify.css';
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const TinyUrl = require('tinyurl');
 
 const Pokemon = (): JSX.Element => {
   const defaultQueryString = `{
@@ -49,13 +53,31 @@ const Pokemon = (): JSX.Element => {
     },
   });
 
+  const hanldeButtonClick = (): any => {
+    TinyUrl.shorten(window.location.href, function(
+      shortenedUrl: string,
+      error: Error
+    ) {
+      if (error) {
+        logError(error);
+      }
+      navigator.clipboard.writeText(shortenedUrl);
+      toast(`${shortenedUrl} Copied to clipboard`);
+    });
+  };
+
   return (
     <div className="container mx-auto px-6">
+      <ToastContainer autoClose={3000} pauseOnHover />
+
       <h1 className="flex justify-center text-white mb-8">Pokemon</h1>
+      <button onClick={hanldeButtonClick} type="button">
+        Copy shortened URL to clipboard
+      </button>
       <textarea
         className="box-border h-64 w-64 p-2 border-4 border-gray-400 bg-gray-200 mb-6"
-        value={query}
         onChange={handleQueryChange}
+        value={query}
       />
       <Card data={countries} />
     </div>
