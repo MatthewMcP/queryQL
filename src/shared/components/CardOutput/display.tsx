@@ -6,22 +6,20 @@ type DisplayObjectProps = {
 };
 
 const DisplayObject: FunctionComponent<DisplayObjectProps> = ({ object }) => {
-  const jsx = [];
-  // eslint-disable-next-line no-restricted-syntax
-  for (const variableName in object) {
-    if (!variableName.startsWith('_')) {
-      // eslint-disable-next-line no-prototype-builtins
-      if (object.hasOwnProperty(variableName)) {
-        jsx.push(
-          <DisplayValue
-            propertyName={variableName}
-            propertyValue={object[variableName]}
-          />
-        );
-      }
-    }
-  }
-  return <>{jsx.map((value: any) => value)}</>;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const jsx = Object.keys(object)
+    .filter(key => !key.startsWith('_'))
+    .map(key => {
+      return (
+        <DisplayValue
+          key={key + object[key]}
+          propertyName={key}
+          propertyValue={object[key]}
+        />
+      );
+    });
+
+  return <>{jsx}</>;
 };
 
 type DisplayValueProps = {
