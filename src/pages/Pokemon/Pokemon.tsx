@@ -1,10 +1,10 @@
-import React, { useEffect, useState, ChangeEvent } from 'react';
-import { gql } from 'apollo-boost';
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import React, { useEffect, useMemo, useState, ChangeEvent } from 'react';
+import ApolloClient, { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
 import { useDebounce } from 'use-debounce';
 import { ToastContainer, toast } from 'react-toastify';
 import { logError, useQueryString } from '../../util';
-import { Country } from './Types';
 import { Card } from '../../shared/components/index';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -41,11 +41,32 @@ const Pokemon = (): JSX.Element => {
     setQueryText(target.value);
   };
 
-  const [countries, setCountries] = useState<Country[][]>([]);
+  const [countries, setCountries] = useState<any[][]>([]);
+  const { value: uriValue, onSetValue: onSetURIValue } = useQueryString(
+    'uri',
+    'https://countries.trevorblades.com/'
+  );
+  const [uri, setURIText] = useState(uriValue);
+  const [debouncedURIText] = useDebounce(uri, debounceTime);
+  const handleURIChange = (e: ChangeEvent): void => {
+    const target = e.target as HTMLTextAreaElement;
+    setURIText(target.value);
+  };
+
+  const apolloClient = useMemo(() => {
+    onSetURIValue(debouncedURIText);
+    return new ApolloClient({
+      uri: debouncedURIText,
+    });
+  }, [debouncedURIText]);
+
   useQuery(gql(debouncedQueryText), {
+    client: apolloClient,
     skip: !debouncedQueryText,
     onCompleted: data => {
-      if (data && data.countries) setCountries(data.countries);
+      if (data && data[Object.keys(data)[0]]) {
+        setCountries(data[Object.keys(data)[0]]);
+      }
     },
     onError: error => {
       logError(error);
@@ -69,8 +90,11 @@ const Pokemon = (): JSX.Element => {
   return (
     <div className="container mx-auto px-6">
       <ToastContainer autoClose={3000} pauseOnHover />
-
       <h1 className="flex justify-center text-white mb-8">Pokemon</h1>
+      <label className="container mx-auto px-6">
+        Name:
+        <input type="text" name="name" onChange={handleURIChange} value={uri} />
+      </label>
       <button onClick={hanldeButtonClick} type="button">
         Copy shortened URL to clipboard
       </button>
