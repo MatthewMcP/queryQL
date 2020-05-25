@@ -1,3 +1,3 @@
-import { Card } from './CardOutput';
+import { CardDisplay } from './CardDisplay';
 
-export { Card };
+export { CardDisplay };

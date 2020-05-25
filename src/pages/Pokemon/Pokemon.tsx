@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useDebounce } from 'use-debounce';
 import { ToastContainer, toast } from 'react-toastify';
 import { logError, useQueryString } from '../../util';
-import { Card } from '../../shared/components/index';
+import { CardDisplay } from '../../shared/components/index';
 import 'react-toastify/dist/ReactToastify.css';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -42,6 +42,7 @@ const Pokemon = (): JSX.Element => {
   };
 
   const [countries, setCountries] = useState<any[][]>([]);
+  // TODO: Remove the default closer to 'release'
   const { value: uriValue, onSetValue: onSetURIValue } = useQueryString(
     'uri',
     'https://countries.trevorblades.com/'
@@ -87,23 +88,56 @@ const Pokemon = (): JSX.Element => {
     });
   };
 
+  // TODO sort this nonsense
+  const {
+    value: showQuerySectionValue,
+    onSetValue: onShowQuerySectionValue,
+  } = useQueryString('showQuery', 'true');
+  const hanldeQuerySectionButtonClick = (): any => {
+    if (showQuerySectionValue === 'true') {
+      onShowQuerySectionValue('false');
+    } else {
+      onShowQuerySectionValue('true');
+    }
+  };
+  const showQuerySectionBool = useMemo(() => {
+    return showQuerySectionValue === 'true';
+  }, [showQuerySectionValue]);
+
   return (
     <div className="container mx-auto px-6">
       <ToastContainer autoClose={3000} pauseOnHover />
       <h1 className="flex justify-center text-white mb-8">Pokemon</h1>
-      <label className="container mx-auto px-6">
-        Name:
-        <input type="text" name="name" onChange={handleURIChange} value={uri} />
-      </label>
-      <button onClick={hanldeButtonClick} type="button">
+      <button className="text-white" onClick={hanldeButtonClick} type="button">
         Copy shortened URL to clipboard
       </button>
-      <textarea
-        className="box-border h-64 w-64 p-2 border-4 border-gray-400 bg-gray-200 mb-6"
-        onChange={handleQueryChange}
-        value={query}
-      />
-      <Card data={countries} />
+      <button
+        className="text-white"
+        onClick={hanldeQuerySectionButtonClick}
+        type="button"
+        // eslint-disable-next-line prettier/prettier
+      >
+        Show/Hide Query section
+      </button>
+      {showQuerySectionBool && (
+        <>
+          <label className="container mx-auto px-6">
+            Name:
+            <input
+              type="text"
+              name="name"
+              onChange={handleURIChange}
+              value={uri}
+            />
+          </label>
+          <textarea
+            className="box-border h-64 w-64 p-2 border-4 border-gray-400 bg-gray-200 mb-6"
+            onChange={handleQueryChange}
+            value={query}
+          />
+        </>
+      )}
+      <CardDisplay data={countries} />
     </div>
   );
 };

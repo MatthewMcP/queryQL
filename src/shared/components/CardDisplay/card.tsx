@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { DisplayValue } from './display';
 
-type CardProps = {
+type CardDisplayProps = {
   data: any;
 };
 
-const Card: FunctionComponent<CardProps> = ({ data }) => {
+const CardDisplay: FunctionComponent<CardDisplayProps> = ({ data }) => {
   return (
     <div className="container mx-auto">
       {data ? (
@@ -31,4 +31,4 @@ const Card: FunctionComponent<CardProps> = ({ data }) => {
     </div>
   );
 };
-export { Card };
+export { CardDisplay };
