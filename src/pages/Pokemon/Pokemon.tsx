@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { useDebounce } from 'use-debounce';
 import { ToastContainer, toast } from 'react-toastify';
 import { logError, useQueryString } from '../../util';
-import { CardDisplay } from '../../shared/components/index';
+import { CardDisplay, TableDisplay } from '../../shared/components/index';
 import 'react-toastify/dist/ReactToastify.css';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -137,6 +137,8 @@ const Pokemon = (): JSX.Element => {
           />
         </>
       )}
+      <TableDisplay data={countries} />
+
       <CardDisplay data={countries} />
     </div>
   );
