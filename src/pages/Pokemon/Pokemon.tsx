@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useEffect, useMemo, useState, ChangeEvent } from 'react';
 import ApolloClient, { gql } from 'apollo-boost';
 import { useQuery } from '@apollo/react-hooks';
@@ -27,21 +26,21 @@ const Pokemon = (): JSX.Element => {
   }`;
 
   // TODO: Remove the default closer to 'release'
-  const { value, onSetValue } = useQueryString('state', defaultQueryString);
-  const [query, setQueryText] = useState(value);
+  const { value: queryValue, onSetValue: onSetQueryValue } = useQueryString(
+    'state',
+    defaultQueryString
+  );
+  const [queryText, setQueryText] = useState(queryValue);
   const debounceTime = 1000;
-  const [debouncedQueryText] = useDebounce(query, debounceTime);
-
-  useEffect(() => {
-    onSetValue(debouncedQueryText);
-  }, [debouncedQueryText]);
-
+  const [debouncedQueryText] = useDebounce(queryText, debounceTime);
   const handleQueryChange = (e: ChangeEvent): void => {
     const target = e.target as HTMLTextAreaElement;
     setQueryText(target.value);
   };
+  useEffect(() => {
+    onSetQueryValue(debouncedQueryText);
+  }, [debouncedQueryText]);
 
-  const [countries, setCountries] = useState<any[][]>([]);
   // TODO: Remove the default closer to 'release'
   const { value: uriValue, onSetValue: onSetURIValue } = useQueryString(
     'uri',
@@ -61,38 +60,39 @@ const Pokemon = (): JSX.Element => {
     });
   }, [debouncedURIText]);
 
+  const [queryResultData, setQueryResultData] = useState<any[][]>([]);
   const { error: gqlError, loading } = useQuery(gql(debouncedQueryText), {
     client: apolloClient,
     skip: !debouncedQueryText,
     onCompleted: data => {
       if (data && data[Object.keys(data)[0]]) {
-        setCountries(data[Object.keys(data)[0]]);
+        setQueryResultData(data[Object.keys(data)[0]]);
       }
     },
     onError: error => {
       logError(error);
-      setCountries([]);
+      setQueryResultData([]);
     },
   });
 
-  const hanldeButtonClick = (): any => {
-    TinyUrl.shorten(window.location.href, function(
-      shortenedUrl: string,
-      error: Error
-    ) {
-      if (error) {
-        logError(error);
+  const handleTinyURLButtonClick = (): void => {
+    TinyUrl.shorten(
+      window.location.href,
+      (shortenedUrl: string, error: Error) => {
+        if (error) {
+          logError(error);
+        }
+        navigator.clipboard.writeText(shortenedUrl);
+        toast(`${shortenedUrl} Copied to clipboard`);
       }
-      navigator.clipboard.writeText(shortenedUrl);
-      toast(`${shortenedUrl} Copied to clipboard`);
-    });
+    );
   };
 
   const {
     value: showQuerySectionValue,
     onSetValue: onShowQuerySectionValue,
   } = useQueryString('showQuery', 'true');
-  const hanldeQuerySectionButtonClick = (): any => {
+  const hanldeQuerySectionButtonClick = (): void => {
     if (showQuerySectionValue === 'true') {
       onShowQuerySectionValue('false');
     } else {
@@ -107,7 +107,7 @@ const Pokemon = (): JSX.Element => {
     value: displayTypeValue,
     onSetValue: onDisplayTypeValue,
   } = useQueryString('displayType', 'table');
-  const handleDisplayTypeChange = (): any => {
+  const handleDisplayTypeChange = (): void => {
     if (displayTypeValue === 'table') {
       onDisplayTypeValue('card');
     } else {
@@ -122,59 +122,54 @@ const Pokemon = (): JSX.Element => {
     <div className="container mx-auto px-6 text-white">
       <ToastContainer autoClose={3000} pauseOnHover />
       <h1 className="flex justify-center mb-8">Pokemon</h1>
-      <button onClick={hanldeButtonClick} type="button">
-        Copy shortened URL to clipboard
+      <button onClick={handleTinyURLButtonClick} type="button">
+        Create tinyURL and copy to clipboard
       </button>
       <div className="border-solid border-4 border-gray-600 p-2">
-        <button
-          onClick={hanldeQuerySectionButtonClick}
-          type="button"
-          // eslint-disable-next-line prettier/prettier
-        >
-          {showQuerySectionBool ? 'Show' : 'Hide'}
+        <button onClick={hanldeQuerySectionButtonClick} type="button">
+          {showQuerySectionBool ? 'Hide ' : 'Show '}
           Query Section
         </button>
         {showQuerySectionBool && (
           <div className="grid grid-cols-2 gap-2 py-2">
-            <label className="col-span-1">
+            <label className="col-span-1" htmlFor="uri">
               URI:
               <input
                 type="text"
                 className="w-full box-border border-4 border-gray-400 bg-gray-200 text-black"
+                id="uri"
                 name="name"
                 onChange={handleURIChange}
                 value={uri}
               />
             </label>
+
             <div className="col-span-1 flex flex-col">
-              <label>Query:</label>
-              <textarea
-                className="box-border h-64 w-full p-2 border-4 border-gray-400 bg-gray-200 text-black"
-                onChange={handleQueryChange}
-                value={query}
-              />
+              <label htmlFor="queryText">
+                Query:
+                <textarea
+                  className="box-border h-64 w-full p-2 border-4 border-gray-400 bg-gray-200 text-black"
+                  id="queryText"
+                  onChange={handleQueryChange}
+                  value={queryText}
+                />
+              </label>
             </div>
           </div>
         )}
       </div>
       <div className="border-solid border-4 border-gray-600 p-2">
-        {loading && (
-          <label className="container mx-auto px-6">Data Is loading</label>
-        )}
+        {loading && <p className="container mx-auto px-6">Data Is loading</p>}
         {gqlError && (
-          <label className="container mx-auto px-6">{gqlError.message}</label>
+          <p className="container mx-auto px-6">{gqlError.message}</p>
         )}
-        <button
-          onClick={handleDisplayTypeChange}
-          type="button"
-          // eslint-disable-next-line prettier/prettier
-        >
-          Toggle Display type
+        <button onClick={handleDisplayTypeChange} type="button">
+          {showTableDisplay ? 'Show Card Display ' : 'Show Table Display'}
         </button>
         {showTableDisplay ? (
-          <TableDisplay data={countries} />
+          <TableDisplay data={queryResultData} />
         ) : (
-          <CardDisplay data={countries} />
+          <CardDisplay data={queryResultData} />
         )}
       </div>
     </div>

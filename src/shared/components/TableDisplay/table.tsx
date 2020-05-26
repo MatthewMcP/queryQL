@@ -12,7 +12,11 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
     jsx = Object.keys(data[0])
       .filter(key => !key.startsWith('_'))
       .map(key => {
-        return <th key={key + data[key]}>{trimAndCapitalise(key)}</th>;
+        return (
+          <th key={key + data[key]} className="box-border border-2 px-2">
+            {trimAndCapitalise(key)}
+          </th>
+        );
       });
   }
 
@@ -20,9 +24,9 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
     <div className="container mx-auto">
       {data ? (
         <>
-          <table className="table-auto box-border border-4 border-gray-400 rounded">
+          <table className="table-auto">
             <thead>
-              <tr className="table-auto box-border border-4 rounded">{jsx}</tr>
+              <tr>{jsx}</tr>
             </thead>
             {data.map((country: any, index: number) => {
               const jsxTheSecond = Object.keys(country)
@@ -41,7 +45,9 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                   }
                   return (
                     // eslint-disable-next-line react/no-array-index-key
-                    <td key={index + key}>{trimAndCapitalise(returnVal)}</td>
+                    <td key={index + key} className="box-border border-2 px-2">
+                      {trimAndCapitalise(returnVal)}
+                    </td>
                   );
                 });
               return (
