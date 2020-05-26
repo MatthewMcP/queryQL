@@ -1,19 +1,18 @@
 /* eslint-disable react/jsx-key */
 import React, { FunctionComponent } from 'react';
+import { trimAndCapitalise } from '../../../util/index';
 
 type TableDisplayProps = {
   data: any;
 };
 
 const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
-  const temp = <th key={1}>fname</th>;
-  const temp2 = <th key={2}>fname2</th>;
-  let jsx: JSX.Element[] = [temp, temp2];
+  let jsx: JSX.Element[] = [];
   if (data && data[0]) {
     jsx = Object.keys(data[0])
       .filter(key => !key.startsWith('_'))
       .map(key => {
-        return <th key={key + data[key]}>{key}</th>;
+        return <th key={key + data[key]}>{trimAndCapitalise(key)}</th>;
       });
   }
 
@@ -21,9 +20,9 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
     <div className="container mx-auto">
       {data ? (
         <>
-          <table>
+          <table className="table-auto box-border border-4 border-gray-400 rounded">
             <thead>
-              <tr>{jsx}</tr>
+              <tr className="table-auto box-border border-4 rounded">{jsx}</tr>
             </thead>
             {data.map((country: any, index: number) => {
               const jsxTheSecond = Object.keys(country)
@@ -42,11 +41,11 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                   }
                   return (
                     // eslint-disable-next-line react/no-array-index-key
-                    <td key={index + key}>{returnVal}</td>
+                    <td key={index + key}>{trimAndCapitalise(returnVal)}</td>
                   );
                 });
               return (
-                <tbody>
+                <tbody className="text-center">
                   <tr key={1}>{jsxTheSecond}</tr>
                 </tbody>
               );

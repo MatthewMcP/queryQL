@@ -61,7 +61,7 @@ const Pokemon = (): JSX.Element => {
     });
   }, [debouncedURIText]);
 
-  useQuery(gql(debouncedQueryText), {
+  const { error: gqlError, loading } = useQuery(gql(debouncedQueryText), {
     client: apolloClient,
     skip: !debouncedQueryText,
     onCompleted: data => {
@@ -88,7 +88,6 @@ const Pokemon = (): JSX.Element => {
     });
   };
 
-  // TODO sort this nonsense
   const {
     value: showQuerySectionValue,
     onSetValue: onShowQuerySectionValue,
@@ -104,42 +103,80 @@ const Pokemon = (): JSX.Element => {
     return showQuerySectionValue === 'true';
   }, [showQuerySectionValue]);
 
+  const {
+    value: displayTypeValue,
+    onSetValue: onDisplayTypeValue,
+  } = useQueryString('displayType', 'table');
+  const handleDisplayTypeChange = (): any => {
+    if (displayTypeValue === 'table') {
+      onDisplayTypeValue('card');
+    } else {
+      onDisplayTypeValue('table');
+    }
+  };
+  const showTableDisplay = useMemo(() => {
+    return displayTypeValue === 'table';
+  }, [displayTypeValue]);
+
   return (
-    <div className="container mx-auto px-6">
+    <div className="container mx-auto px-6 text-white">
       <ToastContainer autoClose={3000} pauseOnHover />
-      <h1 className="flex justify-center text-white mb-8">Pokemon</h1>
-      <button className="text-white" onClick={hanldeButtonClick} type="button">
+      <h1 className="flex justify-center mb-8">Pokemon</h1>
+      <button onClick={hanldeButtonClick} type="button">
         Copy shortened URL to clipboard
       </button>
-      <button
-        className="text-white"
-        onClick={hanldeQuerySectionButtonClick}
-        type="button"
-        // eslint-disable-next-line prettier/prettier
-      >
-        Show/Hide Query section
-      </button>
-      {showQuerySectionBool && (
-        <>
-          <label className="container mx-auto px-6">
-            Name:
-            <input
-              type="text"
-              name="name"
-              onChange={handleURIChange}
-              value={uri}
-            />
-          </label>
-          <textarea
-            className="box-border h-64 w-64 p-2 border-4 border-gray-400 bg-gray-200 mb-6"
-            onChange={handleQueryChange}
-            value={query}
-          />
-        </>
-      )}
-      <TableDisplay data={countries} />
-
-      <CardDisplay data={countries} />
+      <div className="border-solid border-4 border-gray-600 p-2">
+        <button
+          onClick={hanldeQuerySectionButtonClick}
+          type="button"
+          // eslint-disable-next-line prettier/prettier
+        >
+          {showQuerySectionBool ? 'Show' : 'Hide'}
+          Query Section
+        </button>
+        {showQuerySectionBool && (
+          <div className="grid grid-cols-2 gap-2 py-2">
+            <label className="col-span-1">
+              URI:
+              <input
+                type="text"
+                className="w-full box-border border-4 border-gray-400 bg-gray-200 text-black"
+                name="name"
+                onChange={handleURIChange}
+                value={uri}
+              />
+            </label>
+            <div className="col-span-1 flex flex-col">
+              <label>Query:</label>
+              <textarea
+                className="box-border h-64 w-full p-2 border-4 border-gray-400 bg-gray-200 text-black"
+                onChange={handleQueryChange}
+                value={query}
+              />
+            </div>
+          </div>
+        )}
+      </div>
+      <div className="border-solid border-4 border-gray-600 p-2">
+        {loading && (
+          <label className="container mx-auto px-6">Data Is loading</label>
+        )}
+        {gqlError && (
+          <label className="container mx-auto px-6">{gqlError.message}</label>
+        )}
+        <button
+          onClick={handleDisplayTypeChange}
+          type="button"
+          // eslint-disable-next-line prettier/prettier
+        >
+          Toggle Display type
+        </button>
+        {showTableDisplay ? (
+          <TableDisplay data={countries} />
+        ) : (
+          <CardDisplay data={countries} />
+        )}
+      </div>
     </div>
   );
 };
