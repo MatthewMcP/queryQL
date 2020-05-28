@@ -5,12 +5,13 @@ import { getQueryStringValue, setQueryStringValue } from './queryStringUtil';
 
 type useQueryStringProps = {
   value: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onSetValue: any;
 };
 
 const useQueryString = (
   key: string,
-  initialValue?: any
+  initialValue?: unknown
 ): useQueryStringProps => {
   const [value, setValue] = useState(getQueryStringValue(key) || initialValue);
   const onSetValue = useCallback(

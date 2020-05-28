@@ -60,7 +60,7 @@ const Pokemon = (): JSX.Element => {
     });
   }, [debouncedURIText]);
 
-  const [queryResultData, setQueryResultData] = useState<any[][]>([]);
+  const [queryResultData, setQueryResultData] = useState<unknown[][]>([]);
   const { error: gqlError, loading } = useQuery(gql(debouncedQueryText), {
     client: apolloClient,
     skip: !debouncedQueryText,

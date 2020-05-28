@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { trimAndCapitalise } from '../../../util/index';
 
 type DisplayObjectProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   object: any;
 };
 
@@ -24,6 +25,7 @@ const DisplayObject: FunctionComponent<DisplayObjectProps> = ({ object }) => {
 
 type DisplayValueProps = {
   propertyName?: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   propertyValue: any;
 };
 const DisplayValue: FunctionComponent<DisplayValueProps> = ({

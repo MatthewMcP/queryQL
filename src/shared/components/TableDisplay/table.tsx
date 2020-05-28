@@ -1,15 +1,15 @@
-/* eslint-disable react/jsx-key */
 import React, { FunctionComponent } from 'react';
 import { trimAndCapitalise } from '../../../util/index';
 
 type TableDisplayProps = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 };
 
 const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
-  let jsx: JSX.Element[] = [];
+  let jsxTableHeader: JSX.Element[] = [];
   if (data && data[0]) {
-    jsx = Object.keys(data[0])
+    jsxTableHeader = Object.keys(data[0])
       .filter(key => !key.startsWith('_'))
       .map(key => {
         return (
@@ -26,36 +26,42 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
         <>
           <table className="table-auto">
             <thead>
-              <tr>{jsx}</tr>
+              <tr>{jsxTableHeader}</tr>
             </thead>
-            {data.map((country: any, index: number) => {
-              const jsxTheSecond = Object.keys(country)
-                .filter(key => !key.startsWith('_'))
-                .map(key => {
-                  let returnVal = country[key];
-                  if (!returnVal) {
-                    returnVal = 'No Data';
-                  }
+            <tbody className="text-center">
+              {// eslint-disable-next-line @typescript-eslint/no-explicit-any
+              data.map((singleData: any, index: number) => {
+                const jsxTableCells = Object.keys(singleData)
+                  .filter(key => !key.startsWith('_'))
+                  .map(key => {
+                    let returnVal = singleData[key];
+                    if (!returnVal) {
+                      returnVal = 'No Data';
+                    }
 
-                  if (!!returnVal && returnVal.constructor === Object) {
-                    returnVal = 'No Data';
-                  }
-                  if (Array.isArray(returnVal)) {
-                    returnVal = 'No Data';
-                  }
-                  return (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <td key={index + key} className="box-border border-2 px-2">
-                      {trimAndCapitalise(returnVal)}
-                    </td>
-                  );
-                });
-              return (
-                <tbody className="text-center">
-                  <tr key={1}>{jsxTheSecond}</tr>
-                </tbody>
-              );
-            })}
+                    if (!!returnVal && returnVal.constructor === Object) {
+                      returnVal = 'No Data';
+                    }
+                    if (Array.isArray(returnVal)) {
+                      returnVal = 'No Data';
+                    }
+                    return (
+                      <td
+                        // eslint-disable-next-line react/no-array-index-key
+                        key={index + key}
+                        className="box-border border-2 px-2"
+                        // eslint-disable-next-line prettier/prettier
+                      >
+                        {trimAndCapitalise(returnVal)}
+                      </td>
+                    );
+                  });
+                // eslint-disable-next-line react/no-array-index-key
+                return <tr key={index}>{jsxTableCells}</tr>;
+              })
+              // eslint-disable-next-line prettier/prettier
+              }
+            </tbody>
           </table>
         </>
       ) : (

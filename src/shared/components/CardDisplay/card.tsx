@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { DisplayValue } from './display';
 
 type CardDisplayProps = {
-  data: any;
+  data: unknown[];
 };
 
 const CardDisplay: FunctionComponent<CardDisplayProps> = ({ data }) => {
@@ -10,7 +10,7 @@ const CardDisplay: FunctionComponent<CardDisplayProps> = ({ data }) => {
     <div className="container mx-auto">
       {data ? (
         <>
-          {data.map((country: any, index: number) => {
+          {data.map((singleData: unknown, index: number) => {
             return (
               <div
                 // This disable is okay as this array will not be reordered
@@ -20,7 +20,7 @@ const CardDisplay: FunctionComponent<CardDisplayProps> = ({ data }) => {
                 className="container mx-auto text-white border-2 border-white m-2 rounded grid grid-flow-col-dense sm:grid-flow-col gap-2 row-auto"
                 // eslint-disable-next-line prettier/prettier
               >
-                <DisplayValue propertyValue={country} />
+                <DisplayValue propertyValue={singleData} />
               </div>
             );
           })}
