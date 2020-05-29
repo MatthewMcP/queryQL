@@ -2,6 +2,7 @@
 
 import qs from 'query-string';
 import { Base64 } from 'js-base64';
+import pako from 'pako';
 
 const setQueryStringWithoutPageReload = (queryStringValue: string): void => {
   const newurl = `${window.location.protocol}//${window.location.host}${window.location.pathname}${queryStringValue}`;
@@ -14,9 +15,13 @@ const getQueryStringValue = (
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): any => {
   const values = qs.parse(queryString);
-  // eslint-disable-next-line no-extra-parens
-  const stringVal = values[key] ? (values[key] as string) : '';
-  return Base64.decode(stringVal);
+  if (values[key]) {
+    const stringValue = values[key] as string;
+    const unencodedValue = Base64.decode(stringValue);
+    const decompressedVal = pako.inflate(unencodedValue, { to: 'string' });
+    return decompressedVal;
+  }
+  return '';
 };
 
 const setQueryStringValue = (
@@ -25,10 +30,13 @@ const setQueryStringValue = (
   value: any,
   queryString = window.location.search
 ): void => {
-  const values = qs.parse(queryString);
+  const qsValues = qs.parse(queryString);
+  const compressedValue = pako.deflate(value, { to: 'string' });
+  const encodedAndCompressedValue = Base64.encode(compressedValue);
+
   const newQsValue = qs.stringify({
-    ...values,
-    [key]: Base64.encode(value),
+    ...qsValues,
+    [key]: encodedAndCompressedValue,
   });
   setQueryStringWithoutPageReload(`?${newQsValue}`);
 };

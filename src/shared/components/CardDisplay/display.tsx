@@ -58,7 +58,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
     return (
       <span className="col-auto m-0 sm:m-2">
         {trimAndCapitalise(propertyName)}
-        {': '}
+        {'(Count): '}
         {propertyValue.length}
       </span>
     );

@@ -27,7 +27,7 @@ const Pokemon = (): JSX.Element => {
 
   // TODO: Remove the default closer to 'release'
   const { value: queryValue, onSetValue: onSetQueryValue } = useQueryString(
-    'state',
+    'query',
     defaultQueryString
   );
   const [queryText, setQueryText] = useState(queryValue);
