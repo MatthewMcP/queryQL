@@ -21,10 +21,10 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
   }
 
   return (
-    <div className="container mx-auto">
+    <div className="">
       {data ? (
         <>
-          <table className="table-auto">
+          <table className="table-fixed overflow-x-auto">
             <thead>
               <tr>{jsxTableHeader}</tr>
             </thead>
@@ -49,7 +49,7 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                       <td
                         // eslint-disable-next-line react/no-array-index-key
                         key={index + key}
-                        className="box-border border-2 px-2"
+                        className="box-border border-2 sm:px-2 break-all"
                         // eslint-disable-next-line prettier/prettier
                       >
                         {trimAndCapitalise(returnVal)}

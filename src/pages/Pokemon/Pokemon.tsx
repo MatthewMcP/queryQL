@@ -122,11 +122,21 @@ const Pokemon = (): JSX.Element => {
     <div className="container mx-auto px-6 text-white">
       <ToastContainer autoClose={3000} pauseOnHover />
       <h1 className="flex justify-center mb-8">Pokemon</h1>
-      <button onClick={handleTinyURLButtonClick} type="button">
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
+        onClick={handleTinyURLButtonClick}
+        type="button"
+        // eslint-disable-next-line prettier/prettier
+      >
         Create tinyURL and copy to clipboard
       </button>
-      <div className="border-solid border-4 border-gray-600 p-2">
-        <button onClick={hanldeQuerySectionButtonClick} type="button">
+      <div className="border-solid border-4 border-gray-600 p-1">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
+          onClick={hanldeQuerySectionButtonClick}
+          type="button"
+          // eslint-disable-next-line prettier/prettier
+        >
           {showQuerySectionBool ? 'Hide ' : 'Show '}
           Query Section
         </button>
@@ -143,7 +153,6 @@ const Pokemon = (): JSX.Element => {
                 value={uri}
               />
             </label>
-
             <div className="col-span-1 flex flex-col">
               <label htmlFor="queryText">
                 Query:
@@ -158,12 +167,17 @@ const Pokemon = (): JSX.Element => {
           </div>
         )}
       </div>
-      <div className="border-solid border-4 border-gray-600 p-2">
+      <div className="border-solid border-4 border-gray-600 p-1">
         {loading && <p className="container mx-auto px-6">Data Is loading</p>}
         {gqlError && (
           <p className="container mx-auto px-6">{gqlError.message}</p>
         )}
-        <button onClick={handleDisplayTypeChange} type="button">
+        <button
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
+          onClick={handleDisplayTypeChange}
+          type="button"
+          // eslint-disable-next-line prettier/prettier
+        >
           {showTableDisplay ? 'Show Card Display ' : 'Show Table Display'}
         </button>
         {showTableDisplay ? (

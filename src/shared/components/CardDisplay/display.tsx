@@ -34,7 +34,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
 }) => {
   if (typeof propertyValue === 'string' || propertyValue instanceof String) {
     return (
-      <span className="col-auto m-0 sm:m-2">
+      <span className="w-auto m-2">
         {trimAndCapitalise(propertyName)}
         {': '}
         {trimAndCapitalise(propertyValue.toString())}
@@ -43,7 +43,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
   }
   if (typeof propertyValue === 'number' || propertyValue instanceof Number) {
     return (
-      <span className="col-auto m-0 sm:m-2">
+      <span className="w-auto m-2">
         {trimAndCapitalise(propertyName)}
         {propertyValue}
       </span>
@@ -56,7 +56,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
 
   if (Array.isArray(propertyValue)) {
     return (
-      <span className="col-auto m-0 sm:m-2">
+      <span className="w-auto m-2">
         {trimAndCapitalise(propertyName)}
         {'(Count): '}
         {propertyValue.length}
@@ -64,7 +64,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
     );
   }
   return (
-    <span className="col-auto m-0 sm:m-2">
+    <span className="w-auto m-2">
       {trimAndCapitalise(propertyName)}
       {': '}
       Unknown Type
