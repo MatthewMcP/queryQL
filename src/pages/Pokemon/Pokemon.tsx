@@ -20,6 +20,7 @@ const Pokemon = (): JSX.Element => {
       emoji
       currency
       languages {
+        code
         name
       }
     }

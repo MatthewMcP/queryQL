@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { DisplayValue } from './PropertyDisplay';
+import { DisplayObject } from './PropertyDisplay';
 
 type CardDisplayProps = {
   data: unknown[];
@@ -17,7 +17,7 @@ const CardDisplay: FunctionComponent<CardDisplayProps> = ({ data }) => {
                 key={index}
                 className="container mx-auto text-white border-2 border-white m-2 rounded flex flex-wrap"
               >
-                <DisplayValue propertyValue={singleData} />
+                <DisplayObject object={singleData} />
               </div>
             );
           })}

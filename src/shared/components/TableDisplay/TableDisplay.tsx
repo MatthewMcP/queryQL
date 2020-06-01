@@ -1,4 +1,8 @@
-import React, { FunctionComponent } from 'react';
+/* eslint-disable dot-notation */
+import React, { FunctionComponent, useState } from 'react';
+import { Button } from 'react-bootstrap';
+import { CardDisplay } from '../CardDisplay/index';
+
 import { trimAndCapitalise } from '../../../util/index';
 
 type TableDisplayProps = {
@@ -7,6 +11,10 @@ type TableDisplayProps = {
 };
 
 const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
+  const [show, setShow] = useState(false);
+
+  const handleShow = () => setShow(true);
+
   let jsxTableHeader: JSX.Element[] = [];
   if (data && data[0]) {
     jsxTableHeader = Object.keys(data[0])
@@ -20,10 +28,18 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
       });
   }
 
+  // eslint-disable-next-line no-debugger
+  debugger;
+
   return (
     <div>
       {data ? (
         <>
+          <Button variant="primary" onClick={handleShow}>
+            Launch demo modal
+          </Button>
+          {show && <CardDisplay data={data[2]['languages']} />}
+
           <table className="table-fixed overflow-x-auto">
             <thead>
               <tr>{jsxTableHeader}</tr>
@@ -42,7 +58,7 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                       cellText = 'Object Data';
                     }
                     if (Array.isArray(cellText)) {
-                      cellText = cellText.length;
+                      cellText = cellText.length.toString();
                     }
                     return (
                       <td

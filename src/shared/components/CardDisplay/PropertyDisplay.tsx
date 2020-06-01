@@ -35,23 +35,18 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
     return <DisplayObject object={propertyValue} />;
   }
   let propertyValueText = '';
-  switch (propertyValue) {
-    case typeof propertyValue === 'string' || propertyValue instanceof String: {
-      propertyValueText = trimAndCapitalise(propertyValue.toString());
-      break;
-    }
-    case typeof propertyValue === 'number' || propertyValue instanceof Number: {
-      propertyValueText = propertyValue;
-      break;
-    }
-    case Array.isArray(propertyValue): {
-      propertyValueText = propertyValue.length;
-      break;
-    }
-    default: {
-      propertyValueText = 'Cannot Process';
-      break;
-    }
+
+  if (typeof propertyValue === 'string' || propertyValue instanceof String) {
+    propertyValueText = trimAndCapitalise(propertyValue.toString());
+  } else if (
+    typeof propertyValue === 'number' ||
+    propertyValue instanceof Number
+  ) {
+    propertyValueText = propertyValue.toString();
+  } else if (Array.isArray(propertyValue)) {
+    propertyValueText = propertyValue.length.toString();
+  } else {
+    propertyValueText = 'Cannot Process';
   }
 
   return (
@@ -63,7 +58,7 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
   );
 };
 
-export { DisplayValue };
+export { DisplayObject, DisplayValue };
 
 // const TypeNameOrEmpty = (): string => {
 //   if (objectName === 'EmptyDisplay') return '';
