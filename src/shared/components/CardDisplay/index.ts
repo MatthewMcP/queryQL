@@ -1,3 +1,3 @@
-import { CardDisplay } from './card';
+import { CardDisplay } from './CardDisplay';
 
 export { CardDisplay };

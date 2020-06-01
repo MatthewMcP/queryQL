@@ -1,3 +1,3 @@
-import { TableDisplay } from './table';
+import { TableDisplay } from './TableDisplay';
 
 export { TableDisplay };

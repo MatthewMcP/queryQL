@@ -7,7 +7,6 @@ type DisplayObjectProps = {
 };
 
 const DisplayObject: FunctionComponent<DisplayObjectProps> = ({ object }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const jsx = Object.keys(object)
     .filter(key => !key.startsWith('_'))
     .map(key => {
@@ -32,42 +31,34 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
   propertyName = '',
   propertyValue,
 }) => {
-  if (typeof propertyValue === 'string' || propertyValue instanceof String) {
-    return (
-      <span className="w-auto m-2">
-        {trimAndCapitalise(propertyName)}
-        {': '}
-        {trimAndCapitalise(propertyValue.toString())}
-      </span>
-    );
-  }
-  if (typeof propertyValue === 'number' || propertyValue instanceof Number) {
-    return (
-      <span className="w-auto m-2">
-        {trimAndCapitalise(propertyName)}
-        {propertyValue}
-      </span>
-    );
-  }
-
   if (!!propertyValue && propertyValue.constructor === Object) {
     return <DisplayObject object={propertyValue} />;
   }
-
-  if (Array.isArray(propertyValue)) {
-    return (
-      <span className="w-auto m-2">
-        {trimAndCapitalise(propertyName)}
-        {'(Count): '}
-        {propertyValue.length}
-      </span>
-    );
+  let propertyValueText = '';
+  switch (propertyValue) {
+    case typeof propertyValue === 'string' || propertyValue instanceof String: {
+      propertyValueText = trimAndCapitalise(propertyValue.toString());
+      break;
+    }
+    case typeof propertyValue === 'number' || propertyValue instanceof Number: {
+      propertyValueText = propertyValue;
+      break;
+    }
+    case Array.isArray(propertyValue): {
+      propertyValueText = propertyValue.length;
+      break;
+    }
+    default: {
+      propertyValueText = 'Cannot Process';
+      break;
+    }
   }
+
   return (
     <span className="w-auto m-2">
       {trimAndCapitalise(propertyName)}
       {': '}
-      Unknown Type
+      {propertyValueText}
     </span>
   );
 };

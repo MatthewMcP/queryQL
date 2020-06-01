@@ -4,6 +4,9 @@ There are a few other expansions I'd like to expand onto this (for example a tab
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+- NO 'ANY'S
+- No Index as key
+
 ## Available Scripts
 
 In the project directory, you can run:

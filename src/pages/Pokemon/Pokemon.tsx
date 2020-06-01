@@ -52,7 +52,6 @@ const Pokemon = (): JSX.Element => {
     const target = e.target as HTMLTextAreaElement;
     setURIText(target.value);
   };
-
   const apolloClient = useMemo(() => {
     onSetURIValue(debouncedURIText);
     return new ApolloClient({
@@ -126,7 +125,6 @@ const Pokemon = (): JSX.Element => {
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
         onClick={handleTinyURLButtonClick}
         type="button"
-        // eslint-disable-next-line prettier/prettier
       >
         Create tinyURL and copy to clipboard
       </button>
@@ -176,7 +174,6 @@ const Pokemon = (): JSX.Element => {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
           onClick={handleDisplayTypeChange}
           type="button"
-          // eslint-disable-next-line prettier/prettier
         >
           {showTableDisplay ? 'Show Card Display ' : 'Show Table Display'}
         </button>

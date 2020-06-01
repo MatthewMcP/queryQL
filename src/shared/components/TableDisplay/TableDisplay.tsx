@@ -21,7 +21,7 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
   }
 
   return (
-    <div className="">
+    <div>
       {data ? (
         <>
           <table className="table-fixed overflow-x-auto">
@@ -34,25 +34,23 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                 const jsxTableCells = Object.keys(singleData)
                   .filter(key => !key.startsWith('_'))
                   .map(key => {
-                    let returnVal = singleData[key];
-                    if (!returnVal) {
-                      returnVal = 'No Data';
+                    let cellText = singleData[key];
+                    if (!cellText) {
+                      cellText = 'No Data';
                     }
-
-                    if (!!returnVal && returnVal.constructor === Object) {
-                      returnVal = 'No Data';
+                    if (cellText.constructor === Object) {
+                      cellText = 'Object Data';
                     }
-                    if (Array.isArray(returnVal)) {
-                      returnVal = 'No Data';
+                    if (Array.isArray(cellText)) {
+                      cellText = cellText.length;
                     }
                     return (
                       <td
                         // eslint-disable-next-line react/no-array-index-key
                         key={index + key}
                         className="box-border border-2 sm:px-2 break-all"
-                        // eslint-disable-next-line prettier/prettier
                       >
-                        {trimAndCapitalise(returnVal)}
+                        {trimAndCapitalise(cellText)}
                       </td>
                     );
                   });
