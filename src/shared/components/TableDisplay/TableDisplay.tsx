@@ -1,7 +1,6 @@
 /* eslint-disable dot-notation */
-import React, { FunctionComponent, useState } from 'react';
-import { Button } from 'react-bootstrap';
-import { CardDisplay } from '../CardDisplay/index';
+import React, { FunctionComponent } from 'react';
+import { useModal } from '../Modal';
 
 import { trimAndCapitalise } from '../../../util/index';
 
@@ -11,9 +10,7 @@ type TableDisplayProps = {
 };
 
 const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
-  const [show, setShow] = useState(false);
-
-  const handleShow = () => setShow(true);
+  // const [jsx, setJSX] = useState(false);
 
   let jsxTableHeader: JSX.Element[] = [];
   if (data && data[0]) {
@@ -27,19 +24,20 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
         );
       });
   }
+  // let jsx;
 
-  // eslint-disable-next-line no-debugger
-  debugger;
+  // const jsx = useModal;
+  const handleArrayClick = (modalData: unknown[]): void => {
+    // eslint-disable-next-line no-debugger
+    // debugger;
+
+    useModal(modalData);
+  };
 
   return (
     <div>
       {data ? (
         <>
-          <Button variant="primary" onClick={handleShow}>
-            Launch demo modal
-          </Button>
-          {show && <CardDisplay data={data[2]['languages']} />}
-
           <table className="table-fixed overflow-x-auto">
             <thead>
               <tr>{jsxTableHeader}</tr>
@@ -50,15 +48,32 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                 const jsxTableCells = Object.keys(singleData)
                   .filter(key => !key.startsWith('_'))
                   .map(key => {
+                    if (Array.isArray(singleData[key])) {
+                      return (
+                        <td
+                          // eslint-disable-next-line react/no-array-index-key
+                          key={index + key}
+                          className="box-border border-2 sm:px-2 break-all"
+                        >
+                          <button
+                            onClick={(): void => {
+                              handleArrayClick(singleData[key]);
+                            }}
+                            type="button"
+                          >
+                            {trimAndCapitalise(
+                              singleData[key].length.toString()
+                            )}
+                          </button>
+                        </td>
+                      );
+                    }
                     let cellText = singleData[key];
                     if (!cellText) {
                       cellText = 'No Data';
                     }
                     if (cellText.constructor === Object) {
                       cellText = 'Object Data';
-                    }
-                    if (Array.isArray(cellText)) {
-                      cellText = cellText.length.toString();
                     }
                     return (
                       <td
