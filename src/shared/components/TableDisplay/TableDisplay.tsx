@@ -1,7 +1,6 @@
 /* eslint-disable dot-notation */
 import React, { FunctionComponent, useState } from 'react';
 import { useModal } from '../Modal';
-
 import { trimAndCapitalise } from '../../../util/index';
 
 type TableDisplayProps = {
@@ -23,10 +22,12 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
       });
   }
 
+  const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState([]);
-  const [toggleModal, jsxModal] = useModal(modalData);
-  const handleArrayClick = (modalDatat: any): void => {
-    setModalData(modalDatat);
+  const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
+  const handleArrayClick = (modalName: string, modalData2: any): void => {
+    setModalTitle(modalName);
+    setModalData(modalData2);
     toggleModal();
   };
 
@@ -54,9 +55,10 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
                         >
                           <button
                             onClick={(): void => {
-                              handleArrayClick(singleData[key]);
+                              handleArrayClick(key, singleData[key]);
                             }}
                             type="button"
+                            className="no-underline hover:underline text-blue-500 text-lg"
                           >
                             {trimAndCapitalise(
                               singleData[key].length.toString()
