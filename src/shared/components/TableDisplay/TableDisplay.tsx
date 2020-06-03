@@ -1,5 +1,5 @@
 /* eslint-disable dot-notation */
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useModal } from '../Modal';
 
 import { trimAndCapitalise } from '../../../util/index';
@@ -10,8 +10,6 @@ type TableDisplayProps = {
 };
 
 const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
-  // const [jsx, setJSX] = useState(false);
-
   let jsxTableHeader: JSX.Element[] = [];
   if (data && data[0]) {
     jsxTableHeader = Object.keys(data[0])
@@ -24,18 +22,17 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
         );
       });
   }
-  // let jsx;
 
-  // const jsx = useModal;
-  const handleArrayClick = (modalData: unknown[]): void => {
-    // eslint-disable-next-line no-debugger
-    // debugger;
-
-    useModal(modalData);
+  const [modalData, setModalData] = useState([]);
+  const [toggleModal, jsxModal] = useModal(modalData);
+  const handleArrayClick = (modalDatat: any): void => {
+    setModalData(modalDatat);
+    toggleModal();
   };
 
   return (
     <div>
+      {jsxModal()}
       {data ? (
         <>
           <table className="table-fixed overflow-x-auto">
