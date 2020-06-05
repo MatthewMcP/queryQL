@@ -1,4 +1,3 @@
-/* eslint-disable dot-notation */
 import React, { FunctionComponent, useState } from 'react';
 import { useModal } from '../Modal';
 import { trimAndCapitalise } from '../../../util/index';
@@ -15,7 +14,10 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
       .filter(key => !key.startsWith('_'))
       .map(key => {
         return (
-          <th key={key + data[key]} className="box-border border-2 px-2">
+          <th
+            key={key + data[key]}
+            className="box-border border-2 px-2 break-all"
+          >
             {trimAndCapitalise(key)}
           </th>
         );
@@ -25,9 +27,13 @@ const TableDisplay: FunctionComponent<TableDisplayProps> = ({ data }) => {
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState([]);
   const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
-  const handleArrayClick = (modalName: string, modalData2: any): void => {
+  const handleArrayClick = (
+    modalName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    selectedArrayData: any
+  ): void => {
     setModalTitle(modalName);
-    setModalData(modalData2);
+    setModalData(selectedArrayData);
     toggleModal();
   };
 

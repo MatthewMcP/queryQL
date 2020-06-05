@@ -1,10 +1,12 @@
 /* eslint-disable max-len */
 // https://www.tailwindtoolbox.com/components/modal
+
 import React, { useState } from 'react';
 import { CardDisplay } from '../index';
 import { trimAndCapitalise } from '../../../util/index';
 
-const useModal = (title: string, data: any[]): [Function, any] => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const useModal = (title: string, data: unknown[]): [Function, any] => {
   const [show, setShow] = useState(false);
   const handleClose = (): void => setShow(false);
   const toggleModal = (): void => {

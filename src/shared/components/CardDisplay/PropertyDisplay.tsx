@@ -1,4 +1,4 @@
-/* eslint-disable complexity */
+/* eslint complexity: ["error", 9] */
 import React, { FunctionComponent, useState } from 'react';
 import { useModal } from '../Modal';
 import { trimAndCapitalise } from '../../../util/index';
@@ -39,9 +39,13 @@ const DisplayValue: FunctionComponent<DisplayValueProps> = ({
   const [modalTitle, setModalTitle] = useState('');
   const [modalData, setModalData] = useState([]);
   const [toggleModal, jsxModal] = useModal(modalTitle, modalData);
-  const handleArrayClick = (modalName: string, modalData2: any): void => {
+  const handleArrayClick = (
+    modalName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    selectedArrayData: any
+  ): void => {
     setModalTitle(modalName);
-    setModalData(modalData2);
+    setModalData(selectedArrayData);
     toggleModal();
   };
   if (Array.isArray(propertyValue)) {
