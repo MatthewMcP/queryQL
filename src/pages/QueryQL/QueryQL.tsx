@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const TinyUrl = require('tinyurl');
 
-const Pokemon = (): JSX.Element => {
+const QueryQL = (): JSX.Element => {
   const defaultQueryString = `{
     countries {
       name
@@ -99,7 +99,7 @@ const Pokemon = (): JSX.Element => {
       onShowQuerySectionValue('true');
     }
   };
-  const showQuerySectionBool = useMemo(() => {
+  const showQuerySection = useMemo(() => {
     return showQuerySectionValue === 'true';
   }, [showQuerySectionValue]);
 
@@ -107,6 +107,10 @@ const Pokemon = (): JSX.Element => {
     value: displayTypeValue,
     onSetValue: onDisplayTypeValue,
   } = useQueryString('displayType', 'table');
+  const showTableDisplay = useMemo(() => {
+    return displayTypeValue === 'table';
+  }, [displayTypeValue]);
+
   const handleDisplayTypeChange = (): void => {
     if (displayTypeValue === 'table') {
       onDisplayTypeValue('card');
@@ -114,14 +118,11 @@ const Pokemon = (): JSX.Element => {
       onDisplayTypeValue('table');
     }
   };
-  const showTableDisplay = useMemo(() => {
-    return displayTypeValue === 'table';
-  }, [displayTypeValue]);
 
   return (
     <div className="container mx-auto px-6 text-white">
       <ToastContainer autoClose={3000} pauseOnHover />
-      <h1 className="flex justify-center mb-8">Pokemon</h1>
+      <h1 className="flex justify-center mb-8">queryQL</h1>
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full m-2"
         onClick={handleTinyURLButtonClick}
@@ -136,10 +137,10 @@ const Pokemon = (): JSX.Element => {
           type="button"
           // eslint-disable-next-line prettier/prettier
         >
-          {showQuerySectionBool ? 'Hide ' : 'Show '}
+          {showQuerySection ? 'Hide ' : 'Show '}
           Query Section
         </button>
-        {showQuerySectionBool && (
+        {showQuerySection && (
           <div className="grid grid-cols-2 gap-2 py-2">
             <label className="col-span-1" htmlFor="uri">
               URI:
@@ -159,6 +160,7 @@ const Pokemon = (): JSX.Element => {
                   className="box-border h-64 w-full p-2 border-4 border-gray-400 bg-gray-200 text-black"
                   id="queryText"
                   onChange={handleQueryChange}
+                  rows={6}
                   value={queryText}
                 />
               </label>
@@ -187,4 +189,4 @@ const Pokemon = (): JSX.Element => {
     </div>
   );
 };
-export default Pokemon;
+export default QueryQL;

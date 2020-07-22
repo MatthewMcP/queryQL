@@ -1,10 +1,10 @@
 import React from 'react';
-import { Pokemon } from './pages/Pokemon';
+import { QueryQL } from './pages/QueryQL';
 
 const App = (): JSX.Element => (
   <div className="App">
     <div className="bg-gray-800">
-      <Pokemon />
+      <QueryQL />
     </div>
   </div>
 );
