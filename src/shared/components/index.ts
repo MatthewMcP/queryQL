@@ -1,5 +1,5 @@
 import { CardDisplay } from './CardDisplay';
-import { useModal } from './Modal';
 import { TableDisplay } from './TableDisplay';
+import { useModal } from './Modal';
 
 export { CardDisplay, useModal, TableDisplay };
